@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>DEEP — Creative Developer</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Inter,sans-serif;
+    background:#050505;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* ================= CURSOR ================= */
+
+.cursor{
+    position:fixed;
+    width:18px;
+    height:18px;
+    border:1px solid #fff;
+    border-radius:50%;
+    pointer-events:none;
+    transform:translate(-50%,-50%);
+    z-index:9999;
+    transition:.08s;
+    mix-blend-mode:difference;
+}
+
+.cursor-dot{
+    position:fixed;
+    width:5px;
+    height:5px;
+    background:white;
+    border-radius:50%;
+    pointer-events:none;
+    transform:translate(-50%,-50%);
+    z-index:9999;
+}
+
+/* ================= BACKGROUND ================= */
+
+.bg{
+    position:fixed;
+    inset:0;
+    z-index:-5;
+    overflow:hidden;
+}
+
+.orb{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(100px);
+    opacity:.25;
+    animation:float 10s infinite alternate ease-in-out;
+}
+
+.orb.one{
+    width:450px;
+    height:450px;
+    background:#5b21ff;
+    top:-100px;
+    left:-100px;
+}
+
+.orb.two{
+    width:400px;
+    height:400px;
+    background:#00d9ff;
+    right:-100px;
+    top:30%;
+    animation-delay:2s;
+}
+
+.orb.three{
+    width:350px;
+    height:350px;
+    background:#ff2bd6;
+    left:30%;
+    bottom:-150px;
+    animation-delay:4s;
+}
+
+@keyframes float{
+    from{transform:translate(0,0) scale(1)}
+    to{transform:translate(80px,-50px) scale(1.2)}
+}
+
+.grid{
+    position:absolute;
+    inset:0;
+    background-image:
+        linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+    background-size:55px 55px;
+    mask-image:linear-gradient(to bottom,black,transparent);
+}
+
+/* ================= NAVBAR ================= */
+
+nav{
+    position:fixed;
+    top:20px;
+    left:50%;
+    transform:translateX(-50%);
+    width:min(1200px,92%);
+    padding:14px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(10,10,10,.55);
+    backdrop-filter:blur(20px);
+    border-radius:50px;
+    z-index:1000;
+}
+
+.logo{
+    font-family:"Space Grotesk";
+    font-size:22px;
+    font-weight:700;
+    letter-spacing:2px;
+}
+
+.logo span{
+    color:#8b5cf6;
+}
+
+nav ul{
+    list-style:none;
+    display:flex;
+    gap:28px;
+}
+
+nav a{
+    color:#aaa;
+    text-decoration:none;
+    font-size:13px;
+    transition:.3s;
+}
+
+nav a:hover{
+    color:white;
+}
+
+.nav-btn{
+    padding:9px 16px;
+    border-radius:30px;
+    border:1px solid rgba(255,255,255,.2);
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:120px 20px 60px;
+    position:relative;
+}
+
+.hero-content{
+    max-width:1000px;
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 15px;
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:50px;
+    background:rgba(255,255,255,.04);
+    color:#bbb;
+    font-size:12px;
+    margin-bottom:25px;
+    animation:appear 1s ease;
+}
+
+.status{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#55ff9a;
+    box-shadow:0 0 15px #55ff9a;
+}
+
+.hero h1{
+    font-family:"Space Grotesk";
+    font-size:clamp(60px,11vw,145px);
+    line-height:.85;
+    letter-spacing:-8px;
+    font-weight:700;
+}
+
+.gradient{
+    background:linear-gradient(
+        90deg,
+        #fff,
+        #9c7cff,
+        #45e8ff,
+        #fff
+    );
+    background-size:300%;
+    -webkit-background-clip:text;
+    color:transparent;
+    animation:gradient 6s infinite linear;
+}
+
+@keyframes gradient{
+    0%{background-position:0%}
+    100%{background-position:300%}
+}
+
+.hero p{
+    max-width:620px;
+    margin:30px auto;
+    color:#999;
+    line-height:1.8;
+    font-size:16px;
+}
+
+.buttons{
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    margin-top:35px;
+}
+
+.btn{
+    padding:15px 24px;
+    border-radius:50px;
+    text-decoration:none;
+    font-size:14px;
+    transition:.35s;
+}
+
+.primary{
+    color:#050505;
+    background:white;
+}
+
+.primary:hover{
+    transform:translateY(-5px);
+    box-shadow:0 15px 50px rgba(255,255,255,.2);
+}
+
+.secondary{
+    color:white;
+    border:1px solid #333;
+}
+
+.secondary:hover{
+    background:#151515;
+    transform:translateY(-5px);
+}
+
+.scroll{
+    position:absolute;
+    bottom:30px;
+    color:#666;
+    font-size:11px;
+    letter-spacing:3px;
+    animation:bounce 2s infinite;
+}
+
+@keyframes bounce{
+    50%{transform:translateY(8px)}
+}
+
+/* ================= SECTIONS ================= */
+
+section {
+  width: min(100%, 1200px);
+  margin: auto;
+  padding: 130px 0;
+}
+
+.section-label{
+    color:#8b5cf6;
+    font-size:12px;
+    letter-spacing:3px;
+    margin-bottom:18px;
+}
+
+.section-title{
+    font-family:"Space Grotesk";
+    font-size:clamp(38px,6vw,70px);
+    line-height:1;
+    margin-bottom:60px;
+}
+
+/* ================= ABOUT ================= */
+
+.about{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:70px;
+    align-items:center;
+}
+
+.about-text p{
+    color:#999;
+    line-height:1.9;
+    margin-bottom:20px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.stat{
+    padding:30px;
+    border:1px solid #202020;
+    border-radius:20px;
+    background:rgba(255,255,255,.025);
+    transition:.4s;
+}
+
+.stat:hover{
+    transform:translateY(-8px);
+    border-color:#6446ff;
+}
+
+.stat h3{
+    font-size:40px;
+    font-family:"Space Grotesk";
+}
+
+.stat p{
+    color:#777;
+    font-size:13px;
+    margin-top:8px;
+}
+
+/* ================= SKILLS ================= */
+
+.skills{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.skill{
+    min-height:180px;
+    padding:25px;
+    border:1px solid #1d1d1d;
+    border-radius:22px;
+    background:linear-gradient(145deg,#111,#080808);
+    position:relative;
+    overflow:hidden;
+    transition:.4s;
+}
+
+.skill:hover{
+    transform:translateY(-10px) rotateX(4deg);
+    border-color:#7657ff;
+}
+
+.skill-icon{
+    font-size:35px;
+    margin-bottom:35px;
+}
+
+.skill h3{
+    font-size:18px;
+}
+
+.skill p{
+    color:#666;
+    font-size:12px;
+    margin-top:8px;
+}
+
+/* ================= PROJECTS ================= */
+
+.projects{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+
+.project{
+    min-height:350px;
+    padding:30px;
+    border:1px solid #202020;
+    border-radius:25px;
+    position:relative;
+    overflow:hidden;
+    background:#090909;
+    transition:.5s;
+}
+
+.project:hover{
+    transform:translateY(-12px);
+}
+
+.project-visual{
+    height:210px;
+    border-radius:18px;
+    margin-bottom:25px;
+    background:
+        radial-gradient(circle at 30% 30%,#7657ff,transparent 35%),
+        radial-gradient(circle at 70% 60%,#00cfff,transparent 30%),
+        #111;
+    position:relative;
+    overflow:hidden;
+}
+
+.project-visual::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(120deg,transparent,rgba(255,255,255,.15),transparent);
+    transform:translateX(-100%);
+    transition:1s;
+}
+
+.project:hover .project-visual::after{
+    transform:translateX(100%);
+}
+
+.project h3{
+    font-size:22px;
+}
+
+.project p{
+    color:#777;
+    font-size:13px;
+    margin-top:8px;
+}
+
+/* ================= CTA ================= */
+
+.cta{
+    text-align:center;
+    padding:120px 30px;
+    border:1px solid #222;
+    border-radius:35px;
+    background:
+        radial-gradient(circle at center,rgba(98,65,255,.15),transparent 55%);
+}
+
+.cta h2{
+    font-family:"Space Grotesk";
+    font-size:clamp(45px,7vw,85px);
+    line-height:.95;
+}
+
+.cta p{
+    color:#777;
+    margin:25px auto;
+    max-width:500px;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+    width:min(1200px,92%);
+    margin:auto;
+    padding:35px 0;
+    border-top:1px solid #1b1b1b;
+    display:flex;
+    justify-content:space-between;
+    color:#555;
+    font-size:12px;
+}
+
+/* ================= REVEAL ================= */
+
+.reveal{
+    opacity:0;
+    transform:translateY(60px);
+    transition:1s ease;
+}
+
+.reveal.active{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:800px){
+
+    nav ul{
+        display:none;
+    }
+
+    nav{
+        padding:12px 17px;
+    }
+
+    .hero h1{
+        letter-spacing:-4px;
+    }
+
+    .about{
+        grid-template-columns:1fr;
+    }
+
+    .skills{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .projects{
+        grid-template-columns:1fr;
+    }
+
+    footer{
+        flex-direction:column;
+        gap:10px;
+    }
+}
+
+@media(max-width:500px){
+
+    .skills{
+        grid-template-columns:1fr;
+    }
+
+    .buttons{
+        flex-direction:column;
+    }
+
+    .hero p{
+        font-size:14px;
+    }
+}
+@media (max-width: 768px) {
+  .about {
+    grid-template-columns: 1fr;
+  }
+  section {
+    padding: 40px 20px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="cursor"></div>
+<div class="cursor-dot"></div>
+
+<div class="bg">
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
+    <div class="grid"></div>
+</div>
+
+<!-- NAVBAR -->
+
+<nav>
+    <div class="logo">DEEP<span>.</span></div>
+
+    <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+    </ul>
+
+    <a class="nav-btn" href="#contact">Let's Talk</a>
+</nav>
+
+<!-- HERO -->
+
+<header class="hero" id="home">
+
+    <div class="hero-content">
+
+        <div class="badge">
+            <span class="status"></span>
+            Available for creative projects
+        </div>
+
+        <h1>
+            BUILD<br>
+            <span class="gradient">DIGITAL</span><br>
+            WORLDS.
+        </h1>
+
+        <p>
+            I'm Deep — a Computer Science student and aspiring
+            Full-Stack Developer creating modern, interactive
+            and meaningful digital experiences.
+        </p>
+
+        <div class="buttons">
+            <a href="#projects" class="btn primary">
+                Explore Projects →
+            </a>
+
+            <a href="#contact" class="btn secondary">
+                Contact Me
+            </a>
+        </div>
+
+    </div>
+
+    <div class="scroll">
+        SCROLL TO EXPLORE ↓
+    </div>
+
+</header>
+
+<!-- ABOUT -->
+
+<section id="about" class="reveal">
+
+    <div class="section-label">01 — ABOUT</div>
+
+    <div class="about">
+
+        <div class="about-text">
+
+            <h2 class="section-title">
+                Turning ideas<br>
+                into <span class="gradient">experiences.</span>
+            </h2>
+
+            <p>
+                I love building websites and applications that
+                combine technology, design and creativity.
+            </p>
+
+            <p>
+                My current focus is learning modern web development,
+                programming and building real-world projects.
+            </p>
+
+        </div>
+
+        <div class="stats">
+
+            <div class="stat">
+                <h3>10+</h3>
+                <p>Projects Built</p>
+            </div>
+
+            <div class="stat">
+                <h3>15+</h3>
+                <p>Technologies</p>
+            </div>
+
+            <div class="stat">
+                <h3>1+</h3>
+                <p>Years Learning</p>
+            </div>
+
+            <div class="stat">
+                <h3>∞</h3>
+                <p>Ideas</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- SKILLS -->
+
+<section id="skills" class="reveal">
+
+    <div class="section-label">02 — EXPERTISE</div>
+
+    <h2 class="section-title">
+        My <span class="gradient">toolbox.</span>
+    </h2>
+
+    <div class="skills">
+
+        <div class="skill">
+            <div class="skill-icon">◈</div>
+            <h3>HTML / CSS</h3>
+            <p>Modern responsive interfaces</p>
+        </div>
+
+        <div class="skill">
+            <div class="skill-icon">JS</div>
+            <h3>JavaScript</h3>
+            <p>Interactive web applications</p>
+        </div>
+
+        <div class="skill">
+            <div class="skill-icon">⚛️</div>
+            <h3>React</h3>
+            <p>Component-based UI</p>
+        </div>
+
+        <div class="skill">
+            <div class="skill-icon">PY</div>
+            <h3>Python</h3>
+            <p>Programming & backend</p>
+        </div>
+
+        <div class="skill">
+            <div class="skill-icon">DB</div>
+            <h3>Database</h3>
+            <p>SQL & data management</p>
+        </div>
+
+        <div class="skill">
+            <div class="skill-icon">GIT</div>
+            <h3>Git & GitHub</h3>
+            <p>Version control</p>
+        </div>
+
+        <div class="skill">
+            <div class="skill-icon">API</div>
+            <h3>REST API</h3>
+            <p>Backend communication</p>
+        </div>
+
+        <div class="skill">
+            <div class="skill-icon">3D</div>
+            <h3>Creative Web</h3>
+            <p>Animations & visual experiences</p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- PROJECTS -->
+
+<section id="projects" class="reveal">
+
+    <div class="section-label">03 — SELECTED WORK</div>
+
+    <h2 class="section-title">
+        Things I've<br>
+        <span class="gradient">built.</span>
+    </h2>
+
+    <div class="projects">
+
+        <article class="project">
+
+            <div class="project-visual"></div>
+
+            <h3>3D Portfolio</h3>
+
+            <p>
+                Interactive developer portfolio with
+                futuristic visuals and animations.
+            </p>
+
+        </article>
+
+        <article class="project">
+
+            <div class="project-visual"></div>
+
+            <h3>Smart Dashboard</h3>
+
+            <p>
+                Modern dashboard interface designed
+                for data visualization.
+            </p>
+
+        </article>
+
+        <article class="project">
+
+            <div class="project-visual"></div>
+
+            <h3>AI Web App</h3>
+
+            <p>
+                Experimental AI-powered web application
+                with a clean user experience.
+            </p>
+
+        </article>
+
+        <article class="project">
+
+            <div class="project-visual"></div>
+
+            <h3>E-Commerce</h3>
+
+            <p>
+                Responsive shopping experience with
+                modern product interactions.
+            </p>
+
+        </article>
+
+    </div>
+
+</section>
+
+<!-- CONTACT -->
+
+<section id="contact" class="reveal">
+
+    <div class="cta">
+
+        <div class="section-label">04 — CONTACT</div>
+
+        <h2>
+            Let's build<br>
+            something <span class="gradient">great.</span>
+        </h2>
+
+        <p>
+            Have an idea, project or collaboration?
+            Let's create something memorable.
+        </p>
+
+        <a href="mailto:your@email.com" class="btn primary">
+            Start a Conversation →
+        </a>
+
+    </div>
+
+</section>
+
+<footer>
+
+    <span>© 2026 DEEP CHAVDA</span>
+
+    <span>Designed & Built with curiosity.</span>
+
+</footer>
+
+<script>
+
+/* ================= CURSOR ================= */
+
+const cursor = document.querySelector(".cursor");
+const dot = document.querySelector(".cursor-dot");
+
+document.addEventListener("mousemove", e => {
+
+    cursor.style.left = e.clientX + "px";
+    cursor.style.top = e.clientY + "px";
+
+    dot.style.left = e.clientX + "px";
+    dot.style.top = e.clientY + "px";
+
+});
+
+/* ================= SCROLL REVEAL ================= */
+
+const reveals = document.querySelectorAll(".reveal");
+
+function reveal(){
+
+    reveals.forEach(element => {
+
+        const windowHeight = window.innerHeight;
+        const elementTop = element.getBoundingClientRect().top;
+
+        if(elementTop < windowHeight - 100){
+            element.classList.add("active");
+        }
+
+    });
+
+}
+
+window.addEventListener("scroll", reveal);
+reveal();
+
+/* ================= 3D TILT ================= */
+
+document.querySelectorAll(".project,.skill,.stat").forEach(card => {
+
+    card.addEventListener("mousemove", e => {
+
+        const rect = card.getBoundingClientRect();
+
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = (y - centerY) / 15;
+        const rotateY = (centerX - x) / 15;
+
+        card.style.transform =
+            `perspective(800px)
+             rotateX(${rotateX}deg)
+             rotateY(${rotateY}deg)
+             translateY(-8px)`;
+
+    });
+
+    card.addEventListener("mouseleave", () => {
+        card.style.transform = "";
+    });
+
+});
+
+/* ================= MAGNETIC BUTTON ================= */
+
+document.querySelectorAll(".btn").forEach(btn => {
+
+    btn.addEventListener("mousemove", e => {
+
+        const rect = btn.getBoundingClientRect();
+
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+
+        btn.style.transform =
+            translate(${x*.15}px,${y*.15}px);
+
+    });
+
+    btn.addEventListener("mouseleave", () => {
+        btn.style.transform = "";
+    });
+    }
+);
+
+</script>
+
+</body>
+</html>
